@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Hemangi 🎂</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body { 
+      font-family: 'Poppins', system-ui, sans-serif; 
+      background: linear-gradient(to bottom, #ffe4e8, #f8c4d8, #f8d7e8);
+      overflow-x: hidden;
+    }
+    .page { 
+      display: none; 
+      min-height: 100vh; 
+      animation: fadeIn 0.9s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+    .page.active { display: flex; align-items: center; justify-content: center; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    .petal {
+      position: absolute;
+      font-size: 22px;
+      color: #ff69b4;
+      animation: fall linear infinite;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0.9;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-150px) rotate(0deg); }
+      100% { transform: translateY(120vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page 1: Hero -->
+  <div id="page1" class="page active text-center text-white relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/30 z-0"></div>
+    <div class="relative z-10 px-6 text-center">
+      <h1 class="text-6xl md:text-8xl font-bold mb-4">Happy Birthday</h1>
+      <h2 class="text-5xl md:text-6xl font-light">Hemangi ❤️</h2>
+      <p class="mt-6 text-2xl">May 19th • My most precious day</p>
+      
+      <div class="mt-16">
+        <button onclick="nextPage()" 
+                class="px-12 py-5 bg-white text-pink-600 rounded-full text-2xl font-semibold hover:scale-110 transition flex items-center gap-3 mx-auto">
+          Begin the Celebration <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 2: Love Letter -->
+  <div id="page2" class="page bg-white/95 backdrop-blur-md relative">
+    <div class="max-w-2xl mx-auto p-8 text-center relative z-10">
+      <h2 class="text-4xl font-bold text-pink-600 mb-8">My Love Letter For You</h2>
+      <p class="text-lg leading-relaxed text-gray-700 italic">
+        Hemangi, from the moment you came into my life, everything became more beautiful. Your smile, your laughter, 
+        the way you care for me, and the way you light up every room — I fall in love with you more every day.<br><br>
+        
+        Thank you for being my peace, my happiness, and my biggest support. On your special day, I want you to know 
+        that you are deeply loved and cherished. I promise to always make you feel as special as you make me feel.<br><br>
+        
+        I can't wait to create thousands of more memories with you. You deserve the entire world.
+      </p>
+      <p class="mt-10 text-pink-600 font-medium">- Your Boyfriend</p>
+    </div>
+  </div>
+
+  <!-- Page 3: Memories -->
+  <div id="page3" class="page bg-white/90 backdrop-blur-md relative">
+    <div class="max-w-5xl mx-auto p-6 text-center relative z-10">
+      <h2 class="text-4xl font-bold text-pink-700 mb-10">Our Beautiful Memories ❤️</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="gallery"></div>
+    </div>
+  </div>
+
+  <!-- Page 4: Tulip Garden -->
+  <div id="page4" class="page text-white text-center relative">
+    <div class="max-w-2xl mx-auto px-6 relative z-10">
+      <h2 class="text-5xl font-bold mb-6">A Garden of Tulips For You 🌷</h2>
+      <p class="text-2xl leading-relaxed">
+        Just like these beautiful tulips, my love for you blooms brighter every day.<br>
+        May your life be filled with as much beauty, color, and joy as this garden.
+      </p>
+      <p class="mt-10 text-xl">I picked these especially for you ❤️</p>
+    </div>
+  </div>
+
+  <!-- Page 5: Wish -->
+  <div id="page5" class="page bg-white/95 backdrop-blur-md relative">
+    <div class="max-w-2xl mx-auto p-8 text-center relative z-10">
+      <h2 class="text-4xl font-bold text-pink-600 mb-6">My Birthday Wish For You</h2>
+      <p class="text-xl leading-relaxed text-gray-700">
+        May this year bring you endless happiness, success in everything you do, good health, 
+        and all the dreams you’ve been wishing for.
+      </p>
+      <p class="mt-12 text-3xl text-pink-600">I’m so lucky to have you ❤️</p>
+    </div>
+  </div>
+
+  <!-- Page 6: Final -->
+  <div id="page6" class="page text-center relative">
+    <div class="max-w-lg mx-auto px-6 relative z-10">
+      <h2 class="text-5xl font-bold text-pink-600 mb-6">Happy Birthday Hemangi! 🎉</h2>
+      <p class="text-2xl mb-10">I love you more than yesterday, less than tomorrow ❤️</p>
+      <button onclick="throwConfetti()" class="px-12 py-6 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full text-2xl font-bold hover:scale-110 transition">
+        ✨ Make It Rain Confetti ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-6 z-50">
+    <button onclick="prevPage()" 
+            class="px-8 py-4 bg-white/90 hover:bg-white text-pink-600 rounded-full font-semibold shadow-lg transition flex items-center gap-2">
+      ← Previous
+    </button>
+    <button onclick="nextPage()" 
+            class="px-8 py-4 bg-pink-600 hover:bg-pink-700 text-white rounded-full font-semibold shadow-lg transition flex items-center gap-2">
+      Next →
+    </button>
+  </div>
+
+  <!-- Music Player -->
+  <div class="fixed bottom-20 right-6 bg-white shadow-xl rounded-2xl p-4 z-50 flex items-center gap-3">
+    <button onclick="toggleMusic()" id="musicBtn" class="text-2xl w-10 h-10 flex items-center justify-center rounded-full hover:bg-pink-100">
+      ▶️
+    </button>
+    <span class="text-sm text-pink-600 font-medium">Play Music</span>
+  </div>
+
+  <!-- Background Audio -->
+  <audio id="bgMusic" loop>
+    <source src="https://assets.mixkit.co/sfx/preview/296/296.wav" type="audio/wav">
+  </audio>
+
+  <script>
+    let currentPage = 1;
+    const totalPages = 6;
+
+    function createPetal(pageElement) {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.textContent = ['🌷', '🌸', '💗', '🌺', '💕'][Math.floor(Math.random() * 5)];
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = (Math.random() * 5 + 7) + 's';
+      petal.style.fontSize = (Math.random() * 14 + 20) + 'px';
+      pageElement.appendChild(petal);
+      setTimeout(() => petal.remove(), 16000);
+    }
+
+    function startPetalsOnPage(pageId) {
+      const page = document.getElementById(pageId);
+      if (!page) return;
+      page.querySelectorAll('.petal').forEach(p => p.remove());
+      
+      setInterval(() => {
+        if (page.classList.contains('active')) createPetal(page);
+      }, 320);
+    }
+
+    const memories = [
+      "https://source.unsplash.com/random/600x600/?couple",
+      "https://source.unsplash.com/random/600x600/?love",
+      "https://source.unsplash.com/random/600x600/?happy",
+      "https://source.unsplash.com/random/600x600/?romantic"
+    ];
+
+    function createGallery() {
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = '';
+      memories.forEach(src => {
+        const div = document.createElement('div');
+        div.className = "relative group rounded-3xl overflow-hidden shadow-xl";
+        div.innerHTML = `<img src="${src}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">`;
+        gallery.appendChild(div);
+      });
+    }
+
+    function showPage(pageNum) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const currentPageEl = document.getElementById(`page${pageNum}`);
+      currentPageEl.classList.add('active');
+      currentPage = pageNum;
+      
+      startPetalsOnPage(`page${pageNum}`);
+    }
+
+    function nextPage() {
+      if (currentPage < totalPages) showPage(currentPage + 1);
+    }
+
+    function prevPage() {
+      if (currentPage > 1) showPage(currentPage - 1);
+    }
+
+    function throwConfetti() {
+      confetti({ particleCount: 300, spread: 90, origin: { y: 0.6 } });
+    }
+
+    let isPlaying = false;
+    const audio = document.getElementById('bgMusic');
+
+    function toggleMusic() {
+      if (isPlaying) {
+        audio.pause();
+        document.getElementById('musicBtn').innerHTML = '▶️';
+      } else {
+        audio.play();
+        document.getElementById('musicBtn').innerHTML = '⏸️';
+      }
+      isPlaying = !isPlaying;
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === "ArrowRight") nextPage();
+      if (e.key === "ArrowLeft") prevPage();
+    });
+
+    window.onload = () => {
+      showPage(1);
+      createGallery();
+      setTimeout(throwConfetti, 800);
+    };
+  </script>
+</body>
+</html>
